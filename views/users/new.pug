@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+  h1 Create new user
+  form.form-horizontal(id='new-user-form', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='email') Email
+      .col-sm-7
+        input.form-control(type='text', name='email', id='user-email', placeholder='User email', autofocus, required)
+    .form-group
+      label.col-sm-3.control-label(for='password') Email
+      .col-sm-7
+        input.form-control(type='text', name='password', id='user-password', placeholder='User password', autofocus, required)
+    .form-group
+      label.col-sm-3.control-label(for='admin') Is admin
+      .col-sm-7
+        input(type='checkbox', name='admin')
+    .form-group
+      .col-sm-offset-3.col-sm-7
+        button.btn.btn-success(type='submit')
+          i.fa.fa-user-plus
+          | Create
+  
+        

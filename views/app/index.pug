@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+  h1 App list
+  .row
+    .col-sm-6 
+      p.lead List all the existing proxified apps
+    .col-sm-6.text-right
+      a.btn.btn-success(href='/admin/apps/new') Add
+  hr
+  table.table
+    tr
+      th Name
+      th Domain
+      th Relative url
+      th Proxy pass
+      th Restricted
+      th User authorized
+      th
+    each val, index in apps
+      tr
+        td= val.name
+        td= val.domain
+        td= val.url
+        td= val.proxy
+        td= val.restricted
+        td
+          each valU, index in val.users
+            div= valU.email
+        td
+          - link = '/admin/apps/' + val._id
+            a.btn.btn-success(href=link) Edit
+        

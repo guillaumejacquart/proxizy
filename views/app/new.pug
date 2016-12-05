@@ -1,0 +1,42 @@
+extends ../layout
+
+block content
+  h1.col-sm-offset-3 Create new app
+  form.form-horizontal(id='new-app-form', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='name') Name
+      .col-sm-7
+        input.form-control(type='text', name='name', id='app-name', placeholder='App name', autofocus, required)
+    .form-group
+      label.col-sm-3.control-label(for='domain') Domain
+      .col-sm-7
+        input.form-control(type='text', name='domain', id='app-domain', placeholder='App domain')
+    .form-group
+      label.col-sm-3.control-label(for='url') Relative URL
+      .col-sm-7
+        input.form-control(type='text', name='url', id='app-url', placeholder='App url')
+    .form-group
+      label.col-sm-3.control-label(for='proxy-pass') Proxy pass URL
+      .col-sm-7
+        input.form-control(type='text', name='proxy', id='app-proxy', placeholder='App proxy pass URL', required)
+    .form-group
+      label.col-sm-3.control-label(for='restricted') Is app restricted ?
+      .col-sm-7
+        input(type='checkbox', name='restricted')
+    .form-group
+      label.col-sm-3.control-label(for='authorizations') Authorized users
+      .col-sm-7
+        ul.list-group
+          each val, index in users
+            .li.list-group-item.col-sm-4
+              input(type='checkbox', name='users[].value')
+              input(type='hidden', name='users[].id', value=val._id)
+              span= val.email
+    .form-group
+      .col-sm-offset-3.col-sm-7
+        button.btn.btn-success(type='submit')
+          i.fa.fa-user-plus
+          | Create
+  
+        

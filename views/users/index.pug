@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+  h1 Users list
+  .row
+    .col-sm-6 
+      p.lead List all the existing users
+    .col-sm-6.text-right
+      a.btn.btn-success(href='/admin/users/new') Add
+  hr
+  table.table
+    tr
+      th Email
+      th Is admin
+      th
+    each val, index in users
+      tr
+        td= val.email
+        td= val.admin
+        td
+          - link = '/admin/users/' + val._id
+            a.btn.btn-success(href=link) Edit
+        
