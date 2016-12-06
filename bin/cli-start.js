@@ -13,22 +13,39 @@ program
 
 var port = program.port || 3000;
 console.log('Starting Proxizy server on the background on the port : ' + (port.toString()).cyan + ' ...');
-childProcess = spawn('node', ['app.js'], {
-    stdio: 'ignore',
-    detached: true,
-    env: {
-        PORT: port
-    }
-});
 
 db.on('load', function () {
-    console.log('Saving process PID on key/value database ...'.cyan);
-    db.set('process', { pid: childProcess.pid });
+	childProcess = spawn('node', [__dirname + '/www'], {
+		detached: true,
+		stdio:['pipe', 'pipe', 'pipe', 'ipc'],
+		env: {
+			PORT: port
+		}
+	});
 
-    console.log('Proxizy server started succesfully !'.green);
-    
-    console.log('You can access the admin panel on this URL : http://localhost:' + port + '/admin');
-    childProcess.unref();
-    return;
+	childProcess.stdout.on('data', (data) => {
+	    console.log(`proxy : ${data}`);
+	});
+
+	childProcess.stderr.on('data', (data) => {
+	  console.log(`proxy : ${data}`);
+	});
+
+	childProcess.on('close', (code) => {
+	  console.log(`child process exited with code ${code}`);
+	});
+	
+	childProcess.on('message', function(data){
+		if(data.message === 'loaded'){
+			console.log('Saving process PID on key/value database ...'.cyan);
+			db.set('process', { pid: childProcess.pid });
+			console.log('Proxizy server started succesfully !'.green);
+			
+			console.log('You can access the admin panel on this URL : http://localhost:' + port + '/admin');
+			
+			childProcess.unref();
+			process.exit();
+		}
+	});
 });
 

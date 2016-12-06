@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+
+const dotenv = require('dotenv');
+const chalk = require('chalk');
+const express = require('express');
+const app = express();
+
+/**
+ * Load environment variables from .env file, where API keys and passwords are configured.
+ */
+dotenv.load({ path: __dirname + '/.env' });
+
+const reverse_middleware = require('../app.js')({
+	session_secret: 'AWESOME_SECRET'
+});
+
+app.set('port', process.env.PORT || 3000);
+
+app.use('/', reverse_middleware);
+
+app.listen(app.get('port'), () => {
+  console.log('  App is running at http://localhost:%d in %s mode', app.get('port'), app.get('env'));
+  console.log('  Press CTRL-C to stop\n');
+  
+  if(process.send){
+	  process.send({
+		message: 'loaded'
+	  });
+  }
+});
