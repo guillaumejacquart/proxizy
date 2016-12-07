@@ -1,6 +1,6 @@
 {
   "name": "proxizy",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A nodejs reverse proxy with embedded authentications",
   "repository": {
     "type": "git",
@@ -41,7 +41,7 @@
     "passport": "0.3.2",
     "passport-local": "^1.0.0",
     "pug": "^2.0.0-beta6",
-    "request": "^2.78.0",
+    "request": "^2.79.0",
     "validator": "^6.1.0"
   },
   "devDependencies": {

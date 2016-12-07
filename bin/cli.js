@@ -7,7 +7,8 @@
 var program = require('commander');
 
 program
-    .version('0.0.1')
+    .version(require(__dirname + '/../package.json').version)
     .command('start', 'Start proxy')
     .command('stop', 'Stop proxy')
+    .command('status', 'Get running proxy infos')
     .parse(process.argv);

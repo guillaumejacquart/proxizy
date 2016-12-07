@@ -25,7 +25,10 @@ db.on('load', function () {
 	childProcess.on('message', function(data){
 		if(data.message === 'loaded'){
 			console.log('Saving process PID on key/value database ...'.cyan);
-			db.set('process', { pid: childProcess.pid });
+			db.set('process', { 
+				pid: childProcess.pid,
+				port: port
+			});
 			console.log('Proxizy server started succesfully !'.green);
 			
 			console.log('You can access the admin panel on this URL : http://localhost:' + port + '/admin');
