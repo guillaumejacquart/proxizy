@@ -5,7 +5,6 @@ var dirty = require('dirty');
 var colors = require('colors');
 var spawn = require('child_process').spawn;
 var db = dirty(__dirname + '/process.db');
-var childProcess;
 
 program
     .option('-p, --port [port]', 'Port')
@@ -15,24 +14,12 @@ var port = program.port || 3000;
 console.log('Starting Proxizy server on the background on the port : ' + (port.toString()).cyan + ' ...');
 
 db.on('load', function () {
-	childProcess = spawn('node', [__dirname + '/www'], {
+	var childProcess = spawn('node', [__dirname + '/www'], {
 		detached: true,
-		stdio:['pipe', 'pipe', 'pipe', 'ipc'],
+		stdio:['ignore', 'ignore', 'ignore', 'ipc'],
 		env: {
 			PORT: port
 		}
-	});
-
-	childProcess.stdout.on('data', (data) => {
-	    console.log(`proxy : ${data}`);
-	});
-
-	childProcess.stderr.on('data', (data) => {
-	  console.log(`proxy : ${data}`);
-	});
-
-	childProcess.on('close', (code) => {
-	  console.log(`child process exited with code ${code}`);
 	});
 	
 	childProcess.on('message', function(data){

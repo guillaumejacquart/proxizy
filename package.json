@@ -1,6 +1,6 @@
 {
   "name": "proxizy",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A nodejs reverse proxy with embedded authentications",
   "repository": {
     "type": "git",
@@ -8,6 +8,7 @@
   },
   "author": "Guillaume Jacquart",
   "license": "MIT",
+  "main": "app.js",
   "scripts": {
     "start": "node bin/www",
     "test": "mocha --reporter spec"
