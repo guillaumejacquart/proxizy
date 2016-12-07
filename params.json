@@ -1,0 +1,6 @@
+{
+  "name": "Proxizy",
+  "tagline": "Express JS based reverse proxy with built-in authorization",
+  "body": "# Proxizy\r\nProxizy is a reverse proxy with built-in embedded authentication.\r\n\r\n### Installation\r\n\r\nYou can use Proxizy in two ways : using the cli from the global package, or by cloning this repo and running the local environment.\r\n\r\n### Using the CLI\r\nInstall the proxizy server global nodejs package\r\n```sh\r\n$ npm install -g proxizy\r\n```\r\n\r\nStart the Proxizy server on a custom port\r\n```sh\r\n$ proxizy start --port <PORT>\r\n```\r\nGo to http://server-ip:PORT/admin to access proxizy Web GUI\r\n\r\n### Cloning the repository\r\nJust clone the repository, install dependencies and run.\r\n```sh\r\n$ git clone https://github.com/guillaumejacquart/proxizy\r\n$ cd proxizy\r\n$ npm install\r\n$ node app.js\r\n```\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
