@@ -2,7 +2,8 @@ const App = require('../models/app');
 var httpProxy = require('http-proxy');
 var apiProxy = httpProxy.createProxyServer({
 	changeOrigin: true,
-	ignorePath: true
+	ignorePath: true,
+	ws: true
 });
 
 /**
