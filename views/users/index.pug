@@ -20,4 +20,6 @@ block content
         td
           - link = '/admin/users/' + val._id
             a.btn.btn-success(href=link) Edit
+          if !val.admin
+            a.btn.btn-danger.delete(href=link) Delete
         

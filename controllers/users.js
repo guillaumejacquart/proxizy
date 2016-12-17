@@ -33,7 +33,8 @@ exports.postCreate = (req, res) => {
   
   var user = {
 	  email: req.body.email,
-	  password: req.body.password
+	  password: req.body.password,
+	  admin: typeof(req.body.admin) !== 'undefined' && req.body.admin === 'on' ? true : false
   };
   
   User.save(user, (err, newUser) => {
@@ -64,10 +65,23 @@ exports.postEdit = (req, res) => {
   
   var user = {
 	  email: req.body.email,
-	  password: req.body.password
+	  password: req.body.password,
+	  admin: typeof(req.body.admin) !== 'undefined' && req.body.admin === 'on' ? true : false
   };
   
-  User.update({_id: userId}, user, (err, app) => {
+  User.updateUser(userId, user, (err, userDb) => {
     return res.redirect('/admin/users');	  
   });
+};
+
+exports.remove = (req, res) => {
+	var userId = req.params.id;
+	console.log(userId);
+	User.remove({ _id: userId, admin: false }, {}, (err, nummRemoved) => {
+		console.log(nummRemoved);
+		return res.json({
+			status: 'OK',
+			redirectUrl: '/admin/users'
+		});
+	});
 };

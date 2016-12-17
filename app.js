@@ -110,12 +110,14 @@ module.exports = function(optionsArgs){
 	app.post('/admin/apps/new', passportConfig.isAdmin, appController.postCreate);
 	app.get('/admin/apps/:id', passportConfig.isAdmin, appController.getEdit);
 	app.post('/admin/apps/:id', passportConfig.isAdmin, appController.postEdit);
+	app.delete('/admin/apps/:id', passportConfig.isAdmin, appController.remove);
 
 	app.get('/admin/users', passportConfig.isAdmin, usersController.index);
 	app.get('/admin/users/new', passportConfig.isAdmin, usersController.getCreate);
 	app.post('/admin/users/new', passportConfig.isAdmin, usersController.postCreate);
 	app.get('/admin/users/:id', passportConfig.isAdmin, usersController.getEdit);
 	app.post('/admin/users/:id', passportConfig.isAdmin, usersController.postEdit);	
+	app.delete('/admin/users/:id', passportConfig.isAdmin, usersController.remove);	
 	
 	app.all("*", proxyController.index);
 

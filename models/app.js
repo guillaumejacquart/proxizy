@@ -19,4 +19,6 @@ exports.save = function(app, cb){
   return appDb.insert;
 };
 
+exports.remove = appDb.remove;
+
 module.exports = exports;

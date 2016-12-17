@@ -37,15 +37,17 @@ exports.save = function(user, cb){
 	});
 };
 
-exports.update = function(user, cb){
+exports.updateUser = function(id, user, cb){
 	bcrypt.genSalt(10, (err, salt) => {
 		if (err) { return callback(err); }
 		bcrypt.hash(user.password, salt, null, (err, hash) => {
 		  if (err) { return callback(err); }
 		  if(user.password && user.password.length > 0){
 			user.password = hash;
+		  } else {
+			  delete user.password;
 		  }
-		  userDb.update({ _id: user._id }, { $set: user }, function(err, userUpdated){
+		  userDb.update({ _id: id }, { $set: user }, function(err, userUpdated){
 			return cb(err, userUpdated);
 	      });
 		});
@@ -65,5 +67,7 @@ exports.gravatar = function gravatar(size) {
   const md5 = crypto.createHash('md5').update(this.email).digest('hex');
   return `https://gravatar.com/avatar/${md5}?s=${size}&d=retro`;
 };
+
+exports.remove = userDb.remove;
 
 module.exports = exports;

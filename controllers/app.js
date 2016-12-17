@@ -123,3 +123,13 @@ exports.postEdit = (req, res) => {
 		return res.redirect('/admin/apps');
 	});
 };
+
+exports.remove = (req, res) => {
+	var appId = req.params.id;
+	App.remove({ _id: appId }, {}, (err) => {
+		return res.json({
+			status: 'OK',
+			redirectUrl: '/admin/apps'
+		});
+	});
+};
