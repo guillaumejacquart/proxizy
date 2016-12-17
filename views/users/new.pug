@@ -3,7 +3,6 @@ extends ../layout
 block content
   h1 Create new user
   form.form-horizontal(id='new-user-form', method='POST')
-    input(type='hidden', name='_csrf', value=_csrf)
     .form-group
       label.col-sm-3.control-label(for='email') Email
       .col-sm-7

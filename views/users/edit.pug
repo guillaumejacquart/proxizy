@@ -3,7 +3,6 @@ extends ../layout
 block content
   h1 Edit app
   form.form-horizontal(id='new-app-form', method='POST')
-    input(type='hidden', name='_csrf', value=_csrf)
     .form-group
       label.col-sm-3.control-label(for='email') Email
       .col-sm-7
