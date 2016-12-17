@@ -19,7 +19,7 @@ exports.index = (req, res, next) => {
 		var isRelativeUrl = app && app.url && req.path.indexOf(app.url) !== -1;
 		var isSubdomain = app && app.domain && domain == app.domain;
 		
-		if(!isRelativeUrl && !isSubdomain){			
+		if(!isRelativeUrl && !isSubdomain){
 			return next();
 		}
 		

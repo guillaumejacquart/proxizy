@@ -9,10 +9,14 @@ const User = require('../models/user');
  * Login page.
  */
 exports.getLogin = (req, res) => {
-  User.find({ admin: true }, function (err, users) {
+  User.find({ admin: true }).limit(1).exec(function (err, users) {
+	  console.log(users);
+	if(users.length === 0){
+		return res.redirect('/admin/signup');
+	}
+	
     res.render('account/login', {
-      title: 'Login',
-      noAdmin: users.length === 0
+      title: 'Login'
     });
   });
 };
@@ -109,7 +113,7 @@ exports.postSignup = (req, res, next) => {
         if (err) {
           return next(err);
         }
-        res.redirect('/');
+        res.redirect('/admin');
       });
     });
   });

@@ -7,7 +7,6 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const errorHandler = require('errorhandler');
-const lusca = require('lusca');
 const NedbStore = require('express-nedb-session')(session);
 const flash = require('express-flash');
 const path = require('path');
@@ -46,6 +45,7 @@ module.exports = function(optionsArgs){
 	/**
 	 * Express configuration.
 	 */
+	 
 	app.set('views', path.join(__dirname, 'views'));
 	app.set('view engine', 'pug');
 	app.use(expressStatusMonitor());
@@ -62,20 +62,11 @@ module.exports = function(optionsArgs){
 	  resave: true,
 	  saveUninitialized: true,
 	  secret: options.session_secret,
-	  store: new NedbStore({ filename: 'data/session.db' })
+	  store: new NedbStore({ filename: __dirname + '/data/session.db' })
 	}));
 	app.use(passport.initialize());
 	app.use(passport.session());
 	app.use(flash());
-	app.use((req, res, next) => {
-	  if (req.path === '/api/upload') {
-		next();
-	  } else {
-		lusca.csrf()(req, res, next);
-	  }
-	});
-	app.use(lusca.xframe('SAMEORIGIN'));
-	app.use(lusca.xssProtection(true));
 	app.use((req, res, next) => {
 	  res.locals.user = req.user;
 	  next();
@@ -124,8 +115,8 @@ module.exports = function(optionsArgs){
 	app.get('/admin/users/new', passportConfig.isAdmin, usersController.getCreate);
 	app.post('/admin/users/new', passportConfig.isAdmin, usersController.postCreate);
 	app.get('/admin/users/:id', passportConfig.isAdmin, usersController.getEdit);
-	app.post('/admin/users/:id', passportConfig.isAdmin, usersController.postEdit);
-	 
+	app.post('/admin/users/:id', passportConfig.isAdmin, usersController.postEdit);	
+	
 	app.all("*", proxyController.index);
 
 	/**

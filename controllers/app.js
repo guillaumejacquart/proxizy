@@ -6,7 +6,7 @@ const App = require('../models/app');
 const User = require('../models/user');
 
 exports.index = (req, res) => {
-	User.find({}, (err, users) => {
+	User.find({ admin: false }, (err, users) => {
 		App.find({}, (err, apps) => {
 			apps.forEach((a) => {
 				if (a.users) {
@@ -31,7 +31,7 @@ exports.index = (req, res) => {
 };
 
 exports.getCreate = (req, res) => {
-	User.find({}, (err, users) => {
+	User.find({ admin: false }, (err, users) => {
 		res.render('app/new', {
 			title: 'Apps',
 			users: users
@@ -51,11 +51,13 @@ exports.postCreate = (req, res) => {
 	}
 
 	var users = [];
-	req.body.users.forEach((u) => {
-		if (Array.isArray(u) && u.length > 1) {
-			users.push(u.filter((t) => { return t !== 'on'; })[0]);
-		}
-	});
+	if(req.body.users){
+		req.body.users.forEach((u) => {
+			if (Array.isArray(u) && u.length > 1) {
+				users.push(u.filter((t) => { return t !== 'on'; })[0]);
+			}
+		});
+	}
 
 	var app = {
 		name: req.body.name,
@@ -73,7 +75,7 @@ exports.postCreate = (req, res) => {
 
 exports.getEdit = (req, res) => {
 	var appId = req.params.id;
-	User.find({}, (err, users) => {
+	User.find({ admin: false }, (err, users) => {
 		App.findById(appId, (err, app) => {
 			users.forEach((u) => {
 				u.selected = app.users.indexOf(u._id) !== -1;
@@ -100,11 +102,13 @@ exports.postEdit = (req, res) => {
 	}
 
 	var users = [];
-	req.body.users.forEach((u) => {
-		if (Array.isArray(u) && u.length > 1) {
-			users.push(u.filter((t) => { return t !== 'on'; })[0]);
-		}
-	});
+	if(req.body.users){
+		req.body.users.forEach((u) => {
+			if (Array.isArray(u) && u.length > 1) {
+				users.push(u.filter((t) => { return t !== 'on'; })[0]);
+			}
+		});
+	}
 
 	var app = {
 		name: req.body.name,
