@@ -15,12 +15,17 @@ program
 
 console.log('Resurrecting proxizy configuration ...');
 db.on('load', function () {
-    var proxizyProc = db.get('process');	
-    var pid = proxizyProc.pid;	
-	var port = proxizyProc.port || 3000;
 	var dataDir = __dirname + '/../data';
-	var backupDir = getUserHome() + '/.proxizy/backup';
-	var proxizyRunning = isRunning(pid);
+	var backupDir = getUserHome() + '/.proxizy/backup';		
+	var proxizyRunning = false;
+	
+    var proxizyProc = db.get('process');
+	
+	if(proxizyProc){	
+		var pid = proxizyProc.pid;	
+		var port = proxizyProc.port || 3000;
+		proxizyRunning = isRunning(pid);
+	}
 	
 	fs.open(backupDir,'r',function(err,fd){
 		if (err && err.code=='ENOENT') { 

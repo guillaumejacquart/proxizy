@@ -4,8 +4,9 @@ var isRunning = require('is-running');
 var spawn = require('child_process').spawn;
 
 function startProxizy(db, port){
-    var pid = db.get('process').pid;
-	if(pid && isRunning(pid)){
+    var proc = db.get('process');
+	
+	if(proc && proc.pid && isRunning(proc.pid)){
 		return console.log('Proxizy server already running and cannot be started.'.red);		
 	}
 	

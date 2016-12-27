@@ -11,6 +11,11 @@ program
 
 db.on('load', function () {
 	var proc = db.get('process');
+	
+	if(!proc){	
+		return console.log('No Proxizy server instance started !'.red)
+	}
+	
 	utils.stop(proc.pid);
 });
 

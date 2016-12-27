@@ -13,7 +13,12 @@ program
 
 console.log('Saving proxizy configuration ...');
 db.on('load', function () {
-    var pid = db.get('process').pid;	
+    var proxizyProc = db.get('process');
+	
+	if(!proxizyProc){	
+		return console.log('No Proxizy server instance started !'.red)
+	}
+	
 	var dataDir = __dirname + '/../data';
 	var backupDir = getUserHome() + '/.proxizy/backup';
 	
