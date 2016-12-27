@@ -6,7 +6,7 @@ block content
     .col-sm-6 
       p.lead List all the existing proxified apps
     .col-sm-6.text-right
-      a.btn.btn-success(href='/admin/apps/new') Add
+      a.btn.btn-success(href='/proxizy/apps/new') Add
   hr
   table.table
     tr
@@ -28,7 +28,7 @@ block content
           each valU, index in val.users
             div= valU.email
         td
-          - link = '/admin/apps/' + val._id
+          - link = '/proxizy/apps/' + val._id
             a.btn.btn-success(href=link) Edit
             a.btn.btn-danger.delete(href=link) Delete
         

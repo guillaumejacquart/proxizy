@@ -3,7 +3,10 @@ var httpProxy = require('http-proxy');
 var apiProxy = httpProxy.createProxyServer({
 	changeOrigin: true,
 	ignorePath: true,
-	ws: true
+	ws: true,
+	cookieDomainRewrite: {
+		//"test.localhost.tv" : "127.0.0.1"
+	}
 });
 
 /**
@@ -22,21 +25,21 @@ exports.index = (req, res, next) => {
 		if(!isRelativeUrl && !isSubdomain){
 			return next();
 		}
-		
-		var proxyPath = req.path.replace(app.url, '');
-		
+				
 		if(app.restricted){	
 			if(!req.user){
-				return res.redirect('/login');
+				return res.redirect('/proxizy/login');
 			}
 			
 			var index = app.users.indexOf(req.user._id);
 			if(index === -1 && !req.user.admin){
 				req.flash('errors', [{msg: 'You are not allowed to access the website'}]);
-				return res.redirect('/login');
+				return res.redirect('/proxizy/login');
 			}
 		}	
 		
+		var proxyPath = req.url.replace(app.url, '');
+		console.log('proxying to : ' + app.proxy + proxyPath + ' with HTTP ' + req.method);
 		apiProxy.web(req, res, {
 			target: app.proxy + proxyPath
 		}, function(e) { 

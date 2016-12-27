@@ -10,9 +10,8 @@ const User = require('../models/user');
  */
 exports.getLogin = (req, res) => {
   User.find({ admin: true }).limit(1).exec(function (err, users) {
-	  console.log(users);
 	if(users.length === 0){
-		return res.redirect('/admin/signup');
+		return res.redirect('/proxizy/signup');
 	}
 	
     res.render('account/login', {
@@ -34,19 +33,19 @@ exports.postLogin = (req, res, next) => {
 
   if (errors) {
     req.flash('errors', errors);
-    return res.redirect('/login');
+    return res.redirect('/proxizy/login');
   }
 
   passport.authenticate('local', (err, user, info) => {
     if (err) { return next(err); }
     if (!user) {
       req.flash('errors', info);
-      return res.redirect('/login');
+      return res.redirect('/proxizy/login');
     }
     req.logIn(user, (err) => {
       if (err) { return next(err); }
       req.flash('success', { msg: 'Success! You are logged in.' });
-      res.redirect(req.session.returnTo || '/admin');
+      res.redirect(req.session.returnTo || '/proxizy');
     });
   })(req, res, next);
 };
@@ -57,7 +56,7 @@ exports.postLogin = (req, res, next) => {
  */
 exports.logout = (req, res) => {
   req.logout();
-  res.redirect('/admin');
+  res.redirect('/proxizy');
 };
 
 /**
@@ -67,10 +66,10 @@ exports.logout = (req, res) => {
 exports.getSignup = (req, res) => {
   User.find({ admin: true }, function (err, users) {
     if (users.length > 0) {
-      return res.redirect('/login');
+      return res.redirect('/proxizy/login');
     }
     if (req.user) {
-      return res.redirect('/admin');
+      return res.redirect('/proxizy');
     }
     res.render('account/signup', {
       title: 'Create Account'
@@ -92,7 +91,7 @@ exports.postSignup = (req, res, next) => {
 
   if (errors) {
     req.flash('errors', errors);
-    return res.redirect('/signup');
+    return res.redirect('/proxizy/signup');
   }
 
   var user = {
@@ -105,7 +104,7 @@ exports.postSignup = (req, res, next) => {
     if (err) { return next(err); }
     if (existingUser) {
       req.flash('errors', { msg: 'Account with that email address already exists.' });
-      return res.redirect('/signup');
+      return res.redirect('/proxizy/signup');
     }
     User.save(user, (err, userDb) => {
       if (err) { return next(err); }
@@ -113,7 +112,7 @@ exports.postSignup = (req, res, next) => {
         if (err) {
           return next(err);
         }
-        res.redirect('/admin');
+        res.redirect('/proxizy/');
       });
     });
   });

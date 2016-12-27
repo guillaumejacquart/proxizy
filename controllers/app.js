@@ -47,7 +47,7 @@ exports.postCreate = (req, res) => {
 
 	if (errors) {
 		req.flash('errors', errors);
-		return res.redirect('/admin/apps/new');
+		return res.redirect('/proxizy/apps/new');
 	}
 
 	var users = [];
@@ -69,7 +69,7 @@ exports.postCreate = (req, res) => {
 	};
 
 	App.insert(app, (err, newApp) => {
-		return res.redirect('/admin/apps');
+		return res.redirect('/proxizy/apps');
 	});
 };
 
@@ -98,7 +98,7 @@ exports.postEdit = (req, res) => {
 
 	if (errors) {
 		req.flash('errors', errors);
-		return res.redirect('/admin/apps/edit/' + appId);
+		return res.redirect('/proxizy/apps/edit/' + appId);
 	}
 
 	var users = [];
@@ -120,7 +120,7 @@ exports.postEdit = (req, res) => {
 	};
 
 	App.update({ _id: appId }, app, (err, app) => {
-		return res.redirect('/admin/apps');
+		return res.redirect('/proxizy/apps');
 	});
 };
 
@@ -129,7 +129,7 @@ exports.remove = (req, res) => {
 	App.remove({ _id: appId }, {}, (err) => {
 		return res.json({
 			status: 'OK',
-			redirectUrl: '/admin/apps'
+			redirectUrl: '/proxizy/apps'
 		});
 	});
 };

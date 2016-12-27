@@ -28,7 +28,7 @@ exports.postCreate = (req, res) => {
 
   if (errors) {
     req.flash('errors', errors);
-    return res.redirect('/admin/users/new');
+    return res.redirect('/proxizy/users/new');
   }
   
   var user = {
@@ -38,7 +38,7 @@ exports.postCreate = (req, res) => {
   };
   
   User.save(user, (err, newUser) => {
-    return res.redirect('/admin/users');	  
+    return res.redirect('/proxizy/users');	  
   });
 };
 
@@ -60,7 +60,7 @@ exports.postEdit = (req, res) => {
 
   if (errors) {
     req.flash('errors', errors);
-    return res.redirect('/admin/users/edit/' + userId);
+    return res.redirect('/proxizy/users/edit/' + userId);
   }
   
   var user = {
@@ -70,7 +70,7 @@ exports.postEdit = (req, res) => {
   };
   
   User.updateUser(userId, user, (err, userDb) => {
-    return res.redirect('/admin/users');	  
+    return res.redirect('/proxizy/users');	  
   });
 };
 
@@ -81,7 +81,7 @@ exports.remove = (req, res) => {
 		console.log(nummRemoved);
 		return res.json({
 			status: 'OK',
-			redirectUrl: '/admin/users'
+			redirectUrl: '/proxizy/users'
 		});
 	});
 };

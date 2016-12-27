@@ -42,7 +42,7 @@ exports.isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/login');
+  res.redirect('/proxizy/login');
 };
 
 /**
@@ -52,5 +52,5 @@ exports.isAdmin = (req, res, next) => {
   if (req.isAuthenticated() && req.user.admin) {
     return next();
   }
-  res.redirect('/login');
+  res.redirect('/proxizy/login');
 };

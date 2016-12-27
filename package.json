@@ -1,6 +1,6 @@
 {
   "name": "proxizy",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "A nodejs reverse proxy with embedded authentications",
   "repository": {
     "type": "git",
@@ -30,7 +30,9 @@
     "express-session": "^1.14.2",
     "express-status-monitor": "^0.1.5",
     "express-validator": "^2.21.0",
+    "fs-extra": "^1.0.0",
     "http-proxy": "^1.15.2",
+    "is-running": "^2.1.0",
     "lodash": "^4.16.6",
     "lusca": "^1.4.1",
     "morgan": "^1.7.0",
