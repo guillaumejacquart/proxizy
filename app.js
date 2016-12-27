@@ -54,7 +54,8 @@ module.exports = function(optionsArgs){
 	app.use(compression());
 	app.use(sass({
 	  src: path.join(__dirname, 'public'),
-	  dest: path.join(__dirname, 'public')
+	  dest: path.join(__dirname, 'public'),
+	  prefix: '/proxizy'
 	}));
 	app.use(logger('dev'));
 	app.use(expressValidator());

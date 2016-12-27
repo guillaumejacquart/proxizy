@@ -21,10 +21,10 @@ $ proxizy start --port
 Starting Proxizy server on the background on the port : 3000 ...
 Saving process PID on key/value database ...
 Proxizy server started successfully !
-You can access the admin panel on this URL : http://localhost:3000/admin
+You can access the admin panel on this URL : http://localhost:3000/proxizy
 ```
 
-Go to http://server-ip:PORT/admin to access proxizy Web GUI
+Go to http://server-ip:PORT/proxizy to access proxizy Web GUI
 
 #### Cloning the repository
 Just clone the repository, install dependencies and run.

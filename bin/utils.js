@@ -29,7 +29,7 @@ function startProxizy(db, port){
 			});
 			console.log('Proxizy server started successfully !'.green);
 			
-			console.log('You can access the admin panel on this URL : http://localhost:' + port + '/admin');
+			console.log('You can access the admin panel on this URL : http://localhost:' + port + '/proxizy');
 			
 			childProcess.unref();
 			process.exit();
