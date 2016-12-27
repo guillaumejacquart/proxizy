@@ -1,6 +1,6 @@
 {
   "name": "proxizy",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "A nodejs reverse proxy with embedded authentications",
   "repository": {
     "type": "git",

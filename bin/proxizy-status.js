@@ -14,7 +14,7 @@ db.on('load', function () {
 	var proc = db.get('process');
 	
 	if(proc && proc.port){
-		request(`http://localhost:${proc.port}/status`, function (error, response, body) {
+		request(`http://localhost:${proc.port}/proxizy/status`, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
 				console.log((`A proxizy server is running on port ${proc.port} with the pid ${proc.pid}`).green)
 			} else {
