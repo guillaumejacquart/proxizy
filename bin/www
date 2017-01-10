@@ -11,7 +11,7 @@ const app = express();
 dotenv.load({ path: __dirname + '/.env' });
 
 const reverse_middleware = require('../app.js')({
-	session_secret: 'AWESOME_SECRET'
+	session_secret: 'Pr0X|Zy'
 });
 
 app.set('port', process.env.PORT || 3000);
