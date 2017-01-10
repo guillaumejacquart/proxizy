@@ -12,7 +12,6 @@ const flash = require('express-flash');
 const path = require('path');
 const passport = require('passport');
 const expressValidator = require('express-validator');
-const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const multer = require('multer');
 
@@ -68,10 +67,6 @@ module.exports = function(optionsArgs){
 	app.use(flash());
 	
 	app.all(/^((?!proxizy).)*$/, proxyController.index);
-	
-	app.use(expressStatusMonitor({
-		path: '/proxizy/status'
-	}));
 	
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
