@@ -50,3 +50,34 @@ exports.index = (req, res, next) => {
 		});
 	});
 };
+
+exports.upgradeWS = function (req, socket, head) {
+	var domain = req.headers.host;
+	var postIndex = domain.indexOf(':');
+	var port;
+	
+	if(postIndex !== -1){
+		var port = domain.substring(postIndex + 1, domain.length);
+		domain = domain.substring(0, postIndex);
+	}
+	console.log(domain);
+	
+	App.findOne({ $where: function () { 
+		return (this.domain && this.domain === domain); 
+	}}, function(err, app){
+		var isSubdomain = app && app.domain && domain == app.domain;
+		
+		if(!isSubdomain){
+			return;
+		}
+		
+		var proxyPath = app.proxy;
+		proxyPath += req.url;
+		
+		console.log('proxying to : ' + proxyPath + ' with WS upgrade');
+		
+		apiProxy.ws(req, socket, head, {
+			target: proxyPath
+		});
+	});
+};
