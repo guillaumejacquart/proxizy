@@ -10,10 +10,10 @@ const User = require('../models/user');
  */
 exports.getLogin = (req, res) => {
   User.find({ admin: true }).limit(1).exec(function (err, users) {
-	if(users.length === 0){
-		return res.redirect('/proxizy/signup');
-	}
-	
+    if (users.length === 0) {
+      return res.redirect('/proxizy/signup?return_url=' + req.query.return_url);
+    }
+
     res.render('account/login', {
       title: 'Login'
     });

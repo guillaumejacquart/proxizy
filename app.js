@@ -19,9 +19,9 @@ const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
 var options = {};
 
-module.exports = function(optionsArgs){
+module.exports = function (optionsArgs) {
 	options.session_secret = optionsArgs.session_secret || 'SECRET';
-	
+
 	/**
 	 * Controllers (route handlers).
 	 */
@@ -44,50 +44,50 @@ module.exports = function(optionsArgs){
 	/**
 	 * Express configuration.
 	 */
-	 
+
 	app.set('views', path.join(__dirname, 'views'));
 	app.set('view engine', 'pug');
 	app.use(compression());
 	app.use(sass({
-	  src: path.join(__dirname, 'public'),
-	  dest: path.join(__dirname, 'public'),
-	  prefix: '/proxizy'
+		src: path.join(__dirname, 'public'),
+		dest: path.join(__dirname, 'public'),
+		prefix: '/proxizy'
 	}));
 	app.use(logger('dev'));
 	app.use(expressValidator());
 	app.use(session({
-	  resave: true,
-	  saveUninitialized: true,
-	  secret: options.session_secret,
-	  store: new NedbStore({ filename: __dirname + '/data/session.db' }),
-	  name: 'proxizy.sid'
+		resave: true,
+		saveUninitialized: true,
+		secret: options.session_secret,
+		store: new NedbStore({ filename: __dirname + '/data/session.db' }),
+		name: 'proxizy.sid'
 	}));
 	app.use(passport.initialize());
 	app.use(passport.session());
 	app.use(flash());
-	
+
 	app.all(/^((?!proxizy).)*$/, proxyController.index);
-	
+
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: true }));
-	
+
 	app.use((req, res, next) => {
-	  res.locals.user = req.user;
-	  next();
+		res.locals.user = req.user;
+		next();
 	});
 	app.use((req, res, next) => {
-	  // After successful login, redirect back to the intended page
-	  if (!req.user &&
-		  req.path !== '/proxizy/login' &&
-		  req.path !== '/proxizy/signup' &&
-		  !req.path.match(/^\/auth/) &&
-		  !req.path.match(/\./)) {
-		req.session.returnTo = req.path;
-	  } else if (req.user &&
-		  req.path == '/proxizy/account') {
-		req.session.returnTo = req.path;
-	  }
-	  next();
+		// After successful login, redirect back to the intended page
+		if (!req.user &&
+			req.path !== '/proxizy/login' &&
+			req.path !== '/proxizy/signup' &&
+			!req.path.match(/^\/auth/) &&
+			!req.path.match(/\./)) {
+			req.session.returnTo = req.originalUrl;
+		} else if (req.user &&
+			req.path == '/proxizy/account') {
+			req.session.returnTo = req.originalUrl;
+		}
+		next();
 	});
 	app.use('/proxizy', express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 
@@ -120,9 +120,9 @@ module.exports = function(optionsArgs){
 	app.get('/proxizy/users/new', passportConfig.isAdmin, usersController.getCreate);
 	app.post('/proxizy/users/new', passportConfig.isAdmin, usersController.postCreate);
 	app.get('/proxizy/users/:id', passportConfig.isAdmin, usersController.getEdit);
-	app.post('/proxizy/users/:id', passportConfig.isAdmin, usersController.postEdit);	
-	app.delete('/proxizy/users/:id', passportConfig.isAdmin, usersController.remove);	
-	
+	app.post('/proxizy/users/:id', passportConfig.isAdmin, usersController.postEdit);
+	app.delete('/proxizy/users/:id', passportConfig.isAdmin, usersController.remove);
+
 
 	/**
 	 * API examples routes.
@@ -132,6 +132,6 @@ module.exports = function(optionsArgs){
 	 * Error Handler.
 	 */
 	app.use(errorHandler());
-	
+
 	return app;
 };
