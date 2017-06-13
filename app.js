@@ -12,7 +12,6 @@ const flash = require('express-flash');
 const path = require('path');
 const passport = require('passport');
 const expressValidator = require('express-validator');
-const sass = require('node-sass-middleware');
 const multer = require('multer');
 
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
@@ -48,11 +47,6 @@ module.exports = function (optionsArgs) {
 	app.set('views', path.join(__dirname, 'views'));
 	app.set('view engine', 'pug');
 	app.use(compression());
-	app.use(sass({
-		src: path.join(__dirname, 'public'),
-		dest: path.join(__dirname, 'public'),
-		prefix: '/proxizy'
-	}));
 	app.use(logger('dev'));
 	app.use(expressValidator());
 	app.use(session({
