@@ -27,3 +27,5 @@ Thumbs.db
 /bin/process.db
 /data/*.db
 /bin/*.db
+
+package-lock.json

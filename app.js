@@ -12,9 +12,6 @@ const flash = require('express-flash');
 const path = require('path');
 const passport = require('passport');
 const expressValidator = require('express-validator');
-const multer = require('multer');
-
-const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
 var options = {};
 
@@ -117,10 +114,10 @@ module.exports = function (optionsArgs) {
 	app.post('/proxizy/users/:id', passportConfig.isAdmin, usersController.postEdit);
 	app.delete('/proxizy/users/:id', passportConfig.isAdmin, usersController.remove);
 
-
-	/**
-	 * API examples routes.
-	 */
+	// If nothing matches, redirect to /proxizy
+	app.get('/', function(req, res){
+		return res.redirect('/proxizy');
+	});
 
 	/**
 	 * Error Handler.

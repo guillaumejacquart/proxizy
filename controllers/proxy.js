@@ -15,8 +15,9 @@ var apiProxy = httpProxy.createProxyServer({
  */
 exports.index = (req, res, next) => {
 	var domain = req.hostname;
+	console.log(`Try to proxy path ${req.path} or domain ${domain} ...`)
 	App.findOne({
-		$where: function () {
+		$where(){
 			return (this.url && req.path.startsWith(this.url) !== -1)
 				|| (this.domain && this.domain === domain);
 		}
@@ -28,7 +29,10 @@ exports.index = (req, res, next) => {
 			return next();
 		}
 
+		console.log(`Found app ${app.name} ...`)
+
 		if (app.restricted) {
+			console.log('Checking user authorization  ...')
 			req.session.returnTo = req.originalUrl;
 			if (!req.user) {
 				return res.redirect('/proxizy/login');
@@ -54,19 +58,18 @@ exports.index = (req, res, next) => {
 	});
 };
 
+// Upgrades websocket to handled proxy WS protocol
 exports.upgradeWS = function (req, socket, head) {
 	var domain = req.headers.host;
 	var postIndex = domain.indexOf(':');
-	var port;
 
 	if (postIndex !== -1) {
-		var port = domain.substring(postIndex + 1, domain.length);
 		domain = domain.substring(0, postIndex);
 	}
 	console.log(domain);
 
 	App.findOne({
-		$where: function () {
+		$where () {
 			return (this.domain && this.domain === domain);
 		}
 	}, function (err, app) {
@@ -79,7 +82,7 @@ exports.upgradeWS = function (req, socket, head) {
 		var proxyPath = app.proxy;
 		proxyPath += req.url;
 
-		console.log('proxying to : ' + proxyPath + ' with WS upgrade');
+		console.log(`proxying to : ${proxyPath} with WS upgrade.`);
 
 		apiProxy.ws(req, socket, head, {
 			target: proxyPath
